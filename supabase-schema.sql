@@ -1,8 +1,8 @@
--- LoanFlow Database Schema
+-- LoanFlow v2.0 Database Schema
 -- Run this in your Supabase SQL Editor
 
 -- Users table (extends Supabase auth.users)
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY REFERENCES auth.users(id),
   email TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE users (
 );
 
 -- Loans table
-CREATE TABLE loans (
+CREATE TABLE IF NOT EXISTS loans (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_number TEXT UNIQUE NOT NULL,
   borrower_name TEXT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE loans (
 );
 
 -- Tasks table
-CREATE TABLE tasks (
+CREATE TABLE IF NOT EXISTS tasks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_id UUID REFERENCES loans(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
@@ -37,19 +37,31 @@ CREATE TABLE tasks (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Documents table
-CREATE TABLE documents (
+-- Loan documents tracking (per-loan checklist)
+CREATE TABLE IF NOT EXISTS loan_documents (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_id UUID REFERENCES loans(id) ON DELETE CASCADE,
   document_type TEXT NOT NULL,
   required BOOLEAN DEFAULT true,
   received BOOLEAN DEFAULT false,
-  received_date DATE,
+  received_date TIMESTAMPTZ,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(loan_id, document_type)
+);
+
+-- Loan notes with contact tagging
+CREATE TABLE IF NOT EXISTS loan_notes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  loan_id UUID REFERENCES loans(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id),
+  contact_type TEXT NOT NULL CHECK (contact_type IN ('LO', 'Underwriter', 'Client', 'Other')),
+  content TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Activity log table
-CREATE TABLE activity_log (
+CREATE TABLE IF NOT EXISTS activity_log (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_id UUID REFERENCES loans(id) ON DELETE CASCADE,
   user_id UUID REFERENCES users(id),
@@ -62,76 +74,45 @@ CREATE TABLE activity_log (
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE loans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
-ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE loan_documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE loan_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE activity_log ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies for users table
-CREATE POLICY "Users can view their own profile" ON users
-  FOR SELECT USING (auth.uid() = id);
+-- RLS Policies
+CREATE POLICY "Users can view own profile" ON users FOR SELECT USING (auth.uid() = id);
 
--- RLS Policies for loans table
-CREATE POLICY "LOPs can view all loans" ON loans
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role = 'LOP'
-    )
-  );
+CREATE POLICY "LOP and LO can view all loans" ON loans FOR SELECT USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
+CREATE POLICY "LOP can update loans" ON loans FOR UPDATE USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role = 'LOP')
+);
 
-CREATE POLICY "LOs can view their assigned loans" ON loans
-  FOR SELECT USING (
-    assigned_lo_id = auth.uid() OR
-    EXISTS (
-      SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role = 'LOP'
-    )
-  );
+CREATE POLICY "Users can manage tasks" ON tasks FOR ALL USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
 
--- RLS Policies for tasks table
-CREATE POLICY "Users can view tasks for their loans" ON tasks
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM loans 
-      WHERE loans.id = tasks.loan_id 
-      AND (
-        loans.assigned_lo_id = auth.uid() OR
-        loans.assigned_lop_id = auth.uid() OR
-        EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
-      )
-    )
-  );
+CREATE POLICY "Users can manage loan_documents" ON loan_documents FOR ALL USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
 
--- RLS Policies for documents table
-CREATE POLICY "Users can view documents for their loans" ON documents
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM loans 
-      WHERE loans.id = documents.loan_id 
-      AND (
-        loans.assigned_lo_id = auth.uid() OR
-        loans.assigned_lop_id = auth.uid() OR
-        EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
-      )
-    )
-  );
+CREATE POLICY "Users can manage loan_notes" ON loan_notes FOR ALL USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
+CREATE POLICY "Users can insert loan_notes" ON loan_notes FOR INSERT WITH CHECK (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
 
--- RLS Policies for activity_log table
-CREATE POLICY "Users can view activity for their loans" ON activity_log
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM loans 
-      WHERE loans.id = activity_log.loan_id 
-      AND (
-        loans.assigned_lo_id = auth.uid() OR
-        loans.assigned_lop_id = auth.uid() OR
-        EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
-      )
-    )
-  );
+CREATE POLICY "Users can view activity" ON activity_log FOR ALL USING (
+  EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('LOP', 'LO'))
+);
 
--- Create indexes for better performance
-CREATE INDEX idx_loans_assigned_lo ON loans(assigned_lo_id);
-CREATE INDEX idx_loans_assigned_lop ON loans(assigned_lop_id);
-CREATE INDEX idx_loans_stage ON loans(stage);
-CREATE INDEX idx_tasks_loan_id ON tasks(loan_id);
-CREATE INDEX idx_tasks_status ON tasks(status);
-CREATE INDEX idx_documents_loan_id ON documents(loan_id);
-CREATE INDEX idx_activity_loan_id ON activity_log(loan_id);
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_loans_stage ON loans(stage);
+CREATE INDEX IF NOT EXISTS idx_loans_lo ON loans(assigned_lo_id);
+CREATE INDEX IF NOT EXISTS idx_loans_lop ON loans(assigned_lop_id);
+CREATE INDEX IF NOT EXISTS idx_tasks_loan ON tasks(loan_id);
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
+CREATE INDEX IF NOT EXISTS idx_loan_docs_loan ON loan_documents(loan_id);
+CREATE INDEX IF NOT EXISTS idx_loan_notes_loan ON loan_notes(loan_id);
+CREATE INDEX IF NOT EXISTS idx_activity_loan ON activity_log(loan_id);

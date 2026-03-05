@@ -1,39 +1,33 @@
 # LoanFlow v2.0
 
-Loan processing dashboard with role-based access, built with Next.js, Supabase, and a custom design system.
+Modern loan processing dashboard with role-based access, Kanban board, document tracking, and tagged notes.
 
-## Roles
+## Features
 
-- **LOP (Loan Processor)** — Full pipeline view, urgent/weekly task management, mark tasks complete
-- **LO (Loan Officer)** — Pipeline overview, closing schedule, attention-needed loans
-
-## Stack
-
-- **Next.js 14** (App Router, TypeScript)
-- **Supabase** (Auth + Postgres + RLS)
-- **Custom CSS** design system with dark mode
+- **Role-based auth** — LOP (Loan Processor) and LO (Loan Officer) dashboards
+- **Sidebar navigation** — Dashboard, Tasks, Kanban Board, Reports
+- **Kanban board** — 6 loan stages, click to change status
+- **Loan detail modal** — Details tab, Documents tab (per loan type checklist), Notes tab (tagged by contact)
+- **Document tracking** — Hardcoded requirements per loan type (Conventional/FHA/VA/USDA), stored in Supabase
+- **Tagged notes** — Add notes tagged to LO, Underwriter, Client, or Other
+- **Reports dashboard** — Pipeline stats, stage distribution chart, type breakdown
+- **Dark mode** — Toggle in sidebar
+- **Compact design** — 1200px max-width with sidebar layout
 
 ## Setup
 
 ```bash
 npm install
+cp .env.example .env.local  # then add your Supabase credentials
 ```
 
-Create `.env.local`:
-```
-NEXT_PUBLIC_SUPABASE_URL=your_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
-```
-
-Run the SQL files in your Supabase SQL Editor:
-1. `supabase-schema.sql` — creates tables + RLS policies
-2. `supabase-seed-data.sql` — sample loans, tasks, activity
+Run SQL in Supabase SQL Editor:
+1. `supabase-schema.sql`
+2. `supabase-seed-data.sql` (update UUIDs first)
 
 Create demo users in Supabase Auth:
-- `sam@example.com` / `demo123` (LOP)
-- `lo@example.com` / `demo123` (LO)
-
-Then update the seed SQL UUIDs with the actual auth user IDs.
+- `sam@example.com` / `demo123` → LOP
+- `lo@example.com` / `demo123` → LO
 
 ```bash
 npm run dev
@@ -41,4 +35,4 @@ npm run dev
 
 ## Deploy
 
-Push to GitHub → import in Vercel. Add env vars in Vercel project settings.
+Push to GitHub → Vercel. Add env vars in project settings.
