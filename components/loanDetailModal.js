@@ -1,6 +1,6 @@
 import { Icons } from './Icons';
-import { capitalize, formatDate } from '@/utils/helpers';
-import { timelineData } from '@/utils/data';
+import { capitalize, formatDate } from '../utils/helpers';
+import { timelineData } from '../utils/data';
 
 export default function LoanDetailModal({ loan, onClose, onToast }) {
   if (!loan) return null;

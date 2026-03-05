@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Icons } from './Icons';
-import { loanData } from '@/utils/data';
-import { capitalize, formatDate } from '@/utils/helpers';
+import { loanData } from '../utils/data';
+import { capitalize, formatDate } from '../utils/helpers';
 
 export default function DashboardPage({ onOpenModal, onToast }) {
   const [filter, setFilter] = useState('all');

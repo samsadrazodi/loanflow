@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
-import { useTheme } from '@/utils/useTheme';
-import { useToast } from '@/utils/useToast';
-import Header from '@/components/Header';
-import ToastContainer from '@/components/ToastContainer';
-import DashboardPage from '@/components/DashboardPage';
-import ApplicationsPage from '@/components/ApplicationsPage';
-import BorrowersPage from '@/components/BorrowersPage';
-import ReportsPage from '@/components/ReportsPage';
-import SettingsPage from '@/components/SettingsPage';
-import LoanDetailModal from '@/components/LoanDetailModal';
+import { useTheme } from '../utils/useTheme';
+import { useToast } from '../utils/useToast';
+import Header from '../components/Header';
+import ToastContainer from '../components/ToastContainer';
+import DashboardPage from '../components/DashboardPage';
+import ApplicationsPage from '../components/ApplicationsPage';
+import BorrowersPage from '../components/BorrowersPage';
+import ReportsPage from '../components/ReportsPage';
+import SettingsPage from '../components/SettingsPage';
+import LoanDetailModal from '../components/LoanDetailModal';
 
 export default function Home() {
   const [page, setPage] = useState('dashboard');

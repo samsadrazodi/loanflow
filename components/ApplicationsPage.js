@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Icons } from './Icons';
-import { applicationsData } from '@/utils/data';
-import { capitalize, formatDate } from '@/utils/helpers';
+import { applicationsData } from '../utils/data';
+import { capitalize, formatDate } from '../utils/helpers';
 
 const stageStyles = { new: 'review', processing: 'pending', completed: 'approved' };
 

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Icons } from './Icons';
-import { borrowersData } from '@/utils/data';
-import { capitalize, formatDate } from '@/utils/helpers';
+import { borrowersData } from '../utils/data';
+import { capitalize, formatDate } from '../utils/helpers';
 
 const riskBadge = { low: 'approved', medium: 'pending', high: 'rejected' };
 

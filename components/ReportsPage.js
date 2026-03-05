@@ -1,5 +1,5 @@
 import { Icons } from './Icons';
-import { reportChartData } from '@/utils/data';
+import { reportChartData } from '../utils/data';
 
 export default function ReportsPage({ onToast }) {
   const { months, values, loanTypes } = reportChartData;
