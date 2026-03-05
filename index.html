@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoanFlow v2.0 — LOP Dashboard</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+
+<div class="app-wrapper">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════ -->
+  <header class="header" id="appHeader">
+    <div class="header-left">
+      <a href="#" class="header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="7" fill="var(--accent-blue)"/>
+          <path d="M8 9h4v10H8V9zm5 0h2l4 10h-2.5l-0.8-2.2h-3.8L11 19h-.5L13 9zm1 1.8L12.6 15h2.8L14 10.8z" fill="white"/>
+        </svg>
+        <span class="header-logo-text">LoanFlow</span>
+        <span class="header-logo-version">v2.0</span>
+      </a>
+    </div>
+
+    <nav class="header-nav" id="mainNav">
+      <a class="header-nav-item active" href="#" data-page="dashboard">Dashboard</a>
+      <a class="header-nav-item" href="#" data-page="applications">Applications</a>
+      <a class="header-nav-item" href="#" data-page="borrowers">Borrowers</a>
+      <a class="header-nav-item" href="#" data-page="reports">Reports</a>
+      <a class="header-nav-item" href="#" data-page="settings">Settings</a>
+    </nav>
+
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <div class="theme-toggle-knob">
+          <svg id="themeIconSun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg id="themeIconMoon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </div>
+      </button>
+
+      <button class="btn btn-ghost" title="Notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+
+      <div class="avatar" style="background: var(--accent-blue); font-size: 0.72rem;">SM</div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: DASHBOARD
+       ═══════════════════════════════════════════ -->
+  <main class="dashboard-content page-section" id="page-dashboard">
+
+    <!-- Stats Cards -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Total LOPs</span>
+          <div class="stat-card-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">1,247</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +12.3% from last month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Approved</span>
+          <div class="stat-card-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">843</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +8.7% from last month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Pending Review</span>
+          <div class="stat-card-icon amber">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">189</div>
+        <div class="stat-card-change down">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
+          -3.1% from last month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Total Disbursed</span>
+          <div class="stat-card-icon purple">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">$24.6M</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +15.2% from last month
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar -->
+    <section class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-input">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by LOP ID, borrower, or amount...">
+        </div>
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="approved">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Approved
+        </button>
+        <button class="filter-chip" data-filter="pending">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pending
+        </button>
+        <button class="filter-chip" data-filter="review">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> In Review
+        </button>
+        <button class="filter-chip" data-filter="rejected">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Rejected
+        </button>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-secondary" id="exportCsvBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <button class="btn btn-primary" id="newLopBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New LOP
+        </button>
+      </div>
+    </section>
+
+    <!-- Loans Table -->
+    <section class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <span class="table-title">Loan Offer Letters</span>
+          <span class="table-count" id="tableCount">Showing 10 of 1,247</span>
+        </div>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable">LOP ID</th>
+              <th class="sortable">Borrower</th>
+              <th class="sortable">Amount</th>
+              <th class="sortable">Loan Type</th>
+              <th class="sortable">Status</th>
+              <th class="sortable">Priority</th>
+              <th class="sortable">Created</th>
+              <th>Assigned</th>
+              <th style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody id="loansTableBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span class="pagination-info" id="paginationInfo">Showing 1-10 of 1,247 results</span>
+        <div class="pagination-controls">
+          <button class="pagination-btn" id="prevBtn" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn">2</button>
+          <button class="pagination-btn">3</button>
+          <span style="color: var(--text-tertiary); font-size: 0.78rem; padding: 0 4px;">…</span>
+          <button class="pagination-btn">125</button>
+          <button class="pagination-btn" id="nextBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: APPLICATIONS
+       ═══════════════════════════════════════════ -->
+  <main class="dashboard-content page-section" id="page-applications" style="display: none;">
+    <section class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-input">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="appSearchInput" placeholder="Search applications...">
+        </div>
+        <button class="filter-chip active" data-appfilter="all">All</button>
+        <button class="filter-chip" data-appfilter="new">New</button>
+        <button class="filter-chip" data-appfilter="processing">Processing</button>
+        <button class="filter-chip" data-appfilter="completed">Completed</button>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-primary" id="newAppBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Application
+        </button>
+      </div>
+    </section>
+    <section class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <span class="table-title">Loan Applications</span>
+          <span class="table-count" id="appTableCount">Showing 8 applications</span>
+        </div>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>App ID</th><th>Applicant</th><th>Requested Amount</th><th>Type</th><th>Stage</th><th>Submitted</th><th>Documents</th><th style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody id="appTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: BORROWERS
+       ═══════════════════════════════════════════ -->
+  <main class="dashboard-content page-section" id="page-borrowers" style="display: none;">
+    <section class="stats-row" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Total Borrowers</span>
+          <div class="stat-card-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">962</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +24 this month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Active Loans</span>
+          <div class="stat-card-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">1,841</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +5.6% from last month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Avg. Credit Score</span>
+          <div class="stat-card-icon purple">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">724</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +3 pts from last quarter
+        </div>
+      </div>
+    </section>
+    <section class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-input">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="borrowerSearchInput" placeholder="Search borrowers by name, email, or ID...">
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-secondary" id="borrowerExportBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+      </div>
+    </section>
+    <section class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <span class="table-title">Borrower Directory</span>
+          <span class="table-count" id="borrowerTableCount">Showing 8 borrowers</span>
+        </div>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Borrower</th><th>Email</th><th>Active Loans</th><th>Total Borrowed</th><th>Credit Score</th><th>Since</th><th>Risk</th>
+            </tr>
+          </thead>
+          <tbody id="borrowerTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: REPORTS
+       ═══════════════════════════════════════════ -->
+  <main class="dashboard-content page-section" id="page-reports" style="display: none;">
+    <section class="stats-row" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Approval Rate</span>
+          <div class="stat-card-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">67.6%</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          +2.1% from last quarter
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Avg. Processing Time</span>
+          <div class="stat-card-icon amber">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">4.2 days</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          -0.8 days from last quarter
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Default Rate</span>
+          <div class="stat-card-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+        </div>
+        <div class="stat-card-value">1.3%</div>
+        <div class="stat-card-change up">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          -0.2% from last quarter
+        </div>
+      </div>
+    </section>
+    <section class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <span class="table-title">Monthly Origination Volume</span>
+          <span class="table-count">Last 12 months</span>
+        </div>
+        <div class="flex-center" style="gap: 6px;">
+          <button class="btn btn-ghost btn-sm" id="reportExportPdfBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Export PDF
+          </button>
+        </div>
+      </div>
+      <div style="padding: 24px;">
+        <div id="barChart" style="display: flex; align-items: flex-end; gap: 8px; height: 200px;"></div>
+        <div id="barLabels" style="display: flex; gap: 8px; margin-top: 8px;"></div>
+      </div>
+    </section>
+    <section class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <span class="table-title">Loan Type Breakdown</span>
+          <span class="table-count">Current portfolio</span>
+        </div>
+      </div>
+      <div style="padding: 24px;">
+        <div id="loanTypeBreakdown"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: SETTINGS
+       ═══════════════════════════════════════════ -->
+  <main class="dashboard-content page-section" id="page-settings" style="display: none;">
+    <section class="table-container">
+      <div class="table-header-bar">
+        <span class="table-title">General Settings</span>
+      </div>
+      <div style="padding: 24px; display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- Profile -->
+        <div class="modal-section">
+          <div class="modal-section-title">Profile</div>
+          <div class="modal-grid">
+            <div class="modal-field">
+              <span class="modal-field-label">Full Name</span>
+              <div style="margin-top: 4px;">
+                <input type="text" value="Sam M." class="settings-input">
+              </div>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Email</span>
+              <div style="margin-top: 4px;">
+                <input type="email" value="sam@loanflow.io" class="settings-input">
+              </div>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Role</span>
+              <div style="margin-top: 4px;">
+                <select class="settings-input" style="cursor: pointer;">
+                  <option>Admin</option>
+                  <option>Loan Officer</option>
+                  <option>Underwriter</option>
+                  <option selected>Manager</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Organization</span>
+              <div style="margin-top: 4px;">
+                <input type="text" value="LoanFlow Inc." class="settings-input">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appearance -->
+        <div class="modal-section">
+          <div class="modal-section-title">Appearance</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-light);">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 500;">Dark Mode</div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Switch between light and dark themes</div>
+            </div>
+            <button class="theme-toggle" id="settingsThemeToggle" aria-label="Toggle dark mode">
+              <div class="theme-toggle-knob">
+                <svg class="settings-sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="settings-moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </div>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-light);">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 500;">Compact Table View</div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Reduce row spacing in data tables</div>
+            </div>
+            <button class="theme-toggle" id="settingsCompactToggle">
+              <div class="theme-toggle-knob"></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="modal-section">
+          <div class="modal-section-title">Notifications</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-light);">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 500;">Email Notifications</div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Receive updates on loan status changes</div>
+            </div>
+            <button class="theme-toggle settings-toggle" style="background: var(--accent-blue-light); border-color: var(--accent-blue);">
+              <div class="theme-toggle-knob" style="transform: translateX(20px);"></div>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-light);">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 500;">Push Notifications</div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Browser notifications for urgent items</div>
+            </div>
+            <button class="theme-toggle settings-toggle">
+              <div class="theme-toggle-knob"></div>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 8px;">
+          <button class="btn btn-secondary" id="settingsDiscardBtn">Discard</button>
+          <button class="btn btn-primary" id="settingsSaveBtn">Save Changes</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LOAN DETAIL MODAL
+     ═══════════════════════════════════════════ -->
+<div class="modal-overlay" id="loanModal" style="display: none;">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">—</div>
+        <div class="modal-subtitle" id="modalSubtitle">—</div>
+      </div>
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title">Loan Details</div>
+        <div class="modal-grid">
+          <div class="modal-field"><span class="modal-field-label">Borrower Name</span><span class="modal-field-value" id="mdBorrower">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Loan Amount</span><span class="modal-field-value mono" id="mdAmount">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Loan Type</span><span class="modal-field-value" id="mdType">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Interest Rate</span><span class="modal-field-value mono" id="mdRate">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Term</span><span class="modal-field-value" id="mdTerm">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">LTV Ratio</span><span class="modal-field-value mono" id="mdLtv">—</span></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Status & Progress</div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <span id="mdStatus"></span>
+          <span class="text-muted" style="font-size: 0.75rem;" id="mdProgress">—</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill blue" id="mdProgressBar" style="width: 0%;"></div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Property Information</div>
+        <div class="modal-grid">
+          <div class="modal-field"><span class="modal-field-label">Property Address</span><span class="modal-field-value" id="mdAddress">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Property Value</span><span class="modal-field-value mono" id="mdPropertyValue">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Property Type</span><span class="modal-field-value" id="mdPropertyType">—</span></div>
+          <div class="modal-field"><span class="modal-field-label">Appraisal Date</span><span class="modal-field-value" id="mdAppraisal">—</span></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Activity Timeline</div>
+        <div class="timeline" id="mdTimeline"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-footer-left">
+        <button class="btn btn-danger btn-sm" id="modalRejectBtn">Reject</button>
+      </div>
+      <div class="modal-footer-right">
+        <button class="btn btn-secondary" id="modalCloseBtnFooter">Close</button>
+        <button class="btn btn-primary" id="modalApproveBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Approve
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+</body>
+</html>
