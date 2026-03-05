@@ -1,83 +1,79 @@
-/**
- * LoanFlow v2.0 — Loan Detail Modal Component
- */
+import { Icons } from './Icons';
+import { capitalize, formatDate } from '@/utils/helpers';
+import { timelineData } from '@/utils/data';
 
-import { loanData, timelineData } from '../utils/data.js';
-import { capitalize, formatDate } from '../utils/helpers.js';
-import { showToast } from '../utils/toast.js';
+export default function LoanDetailModal({ loan, onClose, onToast }) {
+  if (!loan) return null;
 
-export function openModal(loanId) {
-  const loan = loanData.find(l => l.id === loanId);
-  if (!loan) return;
+  const progressColor = loan.progress >= 80 ? 'green' : loan.progress >= 40 ? 'blue' : 'amber';
 
-  document.getElementById('modalTitle').textContent = loan.id;
-  document.getElementById('modalSubtitle').textContent = `Created on ${formatDate(loan.date)} · ${loan.type} Loan`;
-  document.getElementById('mdBorrower').textContent = loan.borrower;
-  document.getElementById('mdAmount').textContent = `$${loan.amount.toLocaleString()}`;
-  document.getElementById('mdType').textContent = loan.type;
-  document.getElementById('mdRate').textContent = loan.rate;
-  document.getElementById('mdTerm').textContent = loan.term;
-  document.getElementById('mdLtv').textContent = loan.ltv;
-  document.getElementById('mdAddress').textContent = loan.address;
-  document.getElementById('mdPropertyValue').textContent = loan.propertyValue;
-  document.getElementById('mdPropertyType').textContent = loan.propertyType;
-  document.getElementById('mdAppraisal').textContent = loan.appraisal;
-  document.getElementById('mdProgress').textContent = `${loan.progress}% complete`;
-  document.getElementById('mdProgressBar').style.width = `${loan.progress}%`;
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <div className="modal-header">
+          <div>
+            <div className="modal-title">{loan.id}</div>
+            <div className="modal-subtitle">Created on {formatDate(loan.date)} · {loan.type} Loan</div>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close modal">{Icons.close}</button>
+        </div>
 
-  // Status badge
-  document.getElementById('mdStatus').innerHTML = `<span class="status-badge ${loan.status}">${capitalize(loan.status)}</span>`;
+        <div className="modal-body">
+          <div className="modal-section">
+            <div className="modal-section-title">Loan Details</div>
+            <div className="modal-grid">
+              <div className="modal-field"><span className="modal-field-label">Borrower Name</span><span className="modal-field-value">{loan.borrower}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Loan Amount</span><span className="modal-field-value mono">${loan.amount.toLocaleString()}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Loan Type</span><span className="modal-field-value">{loan.type}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Interest Rate</span><span className="modal-field-value mono">{loan.rate}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Term</span><span className="modal-field-value">{loan.term}</span></div>
+              <div className="modal-field"><span className="modal-field-label">LTV Ratio</span><span className="modal-field-value mono">{loan.ltv}</span></div>
+            </div>
+          </div>
 
-  // Progress bar color
-  const bar = document.getElementById('mdProgressBar');
-  bar.className = 'progress-bar-fill';
-  if (loan.progress >= 80) bar.classList.add('green');
-  else if (loan.progress >= 40) bar.classList.add('blue');
-  else bar.classList.add('amber');
+          <div className="modal-section">
+            <div className="modal-section-title">Status & Progress</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              <span className={`status-badge ${loan.status}`}>{capitalize(loan.status)}</span>
+              <span className="text-muted" style={{ fontSize: '0.75rem' }}>{loan.progress}% complete</span>
+            </div>
+            <div className="progress-bar"><div className={`progress-bar-fill ${progressColor}`} style={{ width: `${loan.progress}%` }} /></div>
+          </div>
 
-  // Timeline
-  document.getElementById('mdTimeline').innerHTML = timelineData.map(t => `
-    <div class="timeline-item">
-      <div class="timeline-item-date">${t.date}</div>
-      <div class="timeline-item-text">${t.text}</div>
-      <div class="timeline-item-user">by ${t.user}</div>
+          <div className="modal-section">
+            <div className="modal-section-title">Property Information</div>
+            <div className="modal-grid">
+              <div className="modal-field"><span className="modal-field-label">Property Address</span><span className="modal-field-value">{loan.address}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Property Value</span><span className="modal-field-value mono">{loan.propertyValue}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Property Type</span><span className="modal-field-value">{loan.propertyType}</span></div>
+              <div className="modal-field"><span className="modal-field-label">Appraisal Date</span><span className="modal-field-value">{loan.appraisal}</span></div>
+            </div>
+          </div>
+
+          <div className="modal-section">
+            <div className="modal-section-title">Activity Timeline</div>
+            <div className="timeline">
+              {timelineData.map((t, i) => (
+                <div className="timeline-item" key={i}>
+                  <div className="timeline-item-date">{t.date}</div>
+                  <div className="timeline-item-text">{t.text}</div>
+                  <div className="timeline-item-user">by {t.user}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-footer">
+          <div className="modal-footer-left">
+            <button className="btn btn-danger btn-sm" onClick={() => onToast('Rejection workflow coming soon', 'info')}>Reject</button>
+          </div>
+          <div className="modal-footer-right">
+            <button className="btn btn-secondary" onClick={onClose}>Close</button>
+            <button className="btn btn-primary" onClick={() => onToast('LOP approved successfully!', 'success')}>{Icons.check} Approve</button>
+          </div>
+        </div>
+      </div>
     </div>
-  `).join('');
-
-  document.getElementById('loanModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-
-export function closeModal() {
-  document.getElementById('loanModal').style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-export function initModal() {
-  // Close button
-  const closeBtn = document.getElementById('modalCloseBtn');
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-  // Close on overlay click
-  const overlay = document.getElementById('loanModal');
-  if (overlay) {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal();
-    });
-  }
-
-  // Footer buttons
-  const rejectBtn = document.getElementById('modalRejectBtn');
-  if (rejectBtn) rejectBtn.addEventListener('click', () => showToast('Rejection workflow coming soon', 'info'));
-
-  const closeBtnFooter = document.getElementById('modalCloseBtnFooter');
-  if (closeBtnFooter) closeBtnFooter.addEventListener('click', closeModal);
-
-  const approveBtn = document.getElementById('modalApproveBtn');
-  if (approveBtn) approveBtn.addEventListener('click', () => showToast('LOP approved successfully!', 'success'));
-
-  // Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  );
 }

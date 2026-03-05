@@ -1,7 +1,3 @@
-/**
- * LoanFlow v2.0 — Sample Data
- */
-
 export const loanData = [
   { id: 'LOP-2026-0847', borrower: 'Sarah Mitchell', amount: 485000, type: 'Conventional', status: 'approved', priority: 'high', date: '2026-03-01', assigned: 'JD', assignedColor: '#3b6ef6', rate: '6.25%', term: '30 years', ltv: '78.5%', address: '1422 Elm Street, Denver, CO', propertyValue: '$620,000', propertyType: 'Single Family', appraisal: 'Feb 18, 2026', progress: 95 },
   { id: 'LOP-2026-0846', borrower: 'James Rodriguez', amount: 320000, type: 'FHA', status: 'pending', priority: 'medium', date: '2026-02-28', assigned: 'AK', assignedColor: '#8b5cf6', rate: '5.75%', term: '30 years', ltv: '92.3%', address: '789 Oak Ave, Austin, TX', propertyValue: '$347,000', propertyType: 'Condo', appraisal: 'Feb 22, 2026', progress: 45 },
