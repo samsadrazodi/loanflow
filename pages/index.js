@@ -9,7 +9,7 @@ import ApplicationsPage from '../components/ApplicationsPage';
 import BorrowersPage from '../components/BorrowersPage';
 import ReportsPage from '../components/ReportsPage';
 import SettingsPage from '../components/SettingsPage';
-import LoanDetailModal from '../components/LoanDetailModal';
+import LoanDetailModal from '../components/loanDetailModal';
 
 export default function Home() {
   const [page, setPage] = useState('dashboard');
